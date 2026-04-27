@@ -1,0 +1,65 @@
+#!/bin/sh
+
+echo "=== AT Terminal ==="
+
+# Scan device
+DEVICES=""
+i=1
+
+for d in /dev/ttyUSB* /dev/mhi_DUN /dev/wwan*at* /dev/smd*; do
+    [ -e "$d" ] || continue
+    echo "[$i] $d"
+    eval DEV_$i="$d"
+    DEVICES="$DEVICES $i"
+    i=$((i+1))
+done
+
+echo "[m] Manual input"
+echo
+
+# Pilih device
+printf "Pilih device: "
+read CHOICE
+
+if [ "$CHOICE" = "m" ]; then
+    printf "Masukkan path device: "
+    read DEV
+else
+    eval DEV=\$DEV_$CHOICE
+fi
+
+# Validasi
+if [ ! -e "$DEV" ]; then
+    echo "Device tidak valid!"
+    exit 1
+fi
+
+echo "Menggunakan: $DEV"
+echo "Ketik 'exit' untuk keluar"
+echo
+
+# Setup tty (optional, ignore error kalau bukan tty)
+stty -F $DEV 115200 raw -echo 2>/dev/null
+
+# Start reader
+cat $DEV &
+CATPID=$!
+
+trap "kill $CATPID 2>/dev/null; exit" INT TERM
+
+# Loop input
+while true; do
+    printf "> "
+    read CMD || break
+
+    case "$CMD" in
+        exit|quit|q)
+            break
+            ;;
+    esac
+
+    printf "%s\r" "$CMD" > $DEV
+done
+
+kill $CATPID 2>/dev/null
+echo "Keluar."
