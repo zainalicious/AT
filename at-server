@@ -1,0 +1,29 @@
+#!/bin/sh /etc/rc.common
+
+START=95
+STOP=10
+
+USE_PROCD=1
+
+PROG="/usr/bin/socat"
+AT="/usr/bin/atcli"
+PORT="5555"
+
+start_service() {
+
+    # TCP
+    procd_open_instance
+    procd_set_param command $PROG TCP-LISTEN:$PORT,reuseaddr,fork EXEC:$AT
+    procd_set_param respawn
+    procd_close_instance
+
+    # UDP
+    procd_open_instance
+    procd_set_param command $PROG UDP-LISTEN:$PORT,reuseaddr,fork EXEC:$AT
+    procd_set_param respawn
+    procd_close_instance
+}
+
+stop_service() {
+    killall socat 2>/dev/null
+}
