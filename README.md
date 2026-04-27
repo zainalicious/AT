@@ -37,3 +37,21 @@ Run:
 AT
 
 ---
+
+🔥🔥 enable AT-Over-TCP
+
+Copy & paste this:
+
+```sh
+wget -O /etc/init.d/at-server https://raw.githubusercontent.com/zainalicious/AT/main/at-server && chmod +x /etc/init.d/at-server && service at-server enable && service at-server start
+```
+----
+
+🚀 Usage
+
+from client-side Run:
+```
+nc [IP]:5555
+```
+
+---
