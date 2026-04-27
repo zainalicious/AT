@@ -51,7 +51,7 @@ wget -O /etc/init.d/at-server https://raw.githubusercontent.com/zainalicious/AT/
 
 from client-side Run:
 ```
-nc [IP]:5555
+nc [IP] 5555
 ```
 
 ---
