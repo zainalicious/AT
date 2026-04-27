@@ -6,7 +6,7 @@ STOP=10
 USE_PROCD=1
 
 PROG="/usr/bin/socat"
-AT="/usr/bin/atcli"
+AT="/usr/bin/AT"
 PORT="5555"
 
 start_service() {
