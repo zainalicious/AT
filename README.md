@@ -40,6 +40,19 @@ AT
 
 🔥🔥 enable AT-Over-TCP
 
+untuk mengaktifkan ini diperlukan dependency socat, 
+install dulu jika belum ada
+
+ipk
+```sh
+opkg update && opkg install socat
+```
+
+apk
+```sh
+apk update && apk add socat
+```
+
 Copy & paste this:
 
 ```sh
