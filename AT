@@ -6,7 +6,7 @@ echo "=== AT Terminal ==="
 DEVICES=""
 i=1
 
-for d in /dev/ttyUSB* /dev/mhi_DUN /dev/wwan*at* /dev/smd*; do
+for d in /dev/ttyACM* /dev/ttyUSB* /dev/mhi_DUN /dev/wwan*at* /dev/smd*; do
     [ -e "$d" ] || continue
     echo "[$i] $d"
     eval DEV_$i="$d"
